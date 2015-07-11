@@ -1,0 +1,35 @@
+name:                agui
+version:             0.1
+-- synopsis:
+-- description:
+license:             BSD3
+license-file:        LICENSE
+author:              Dimitri Sabadie <dimitri.sabadie@gmail.com>
+maintainer:          Dimitri Sabadie <dimitri.sabadie@gmail.com>
+copyright:           Dimitri Sabadie
+category:            Graphics
+extra-source-files:  CHANGELOG.md
+
+build-type:          Simple
+cabal-version:       >= 1.10
+
+library
+  exposed-modules:     Graphics.UI.AGUI.Core.El
+                     , Graphics.UI.AGUI.Core.Layout
+                     , Graphics.UI.AGUI.Core.Margin
+                     , Graphics.UI.AGUI.Core.Metrics
+                     , Graphics.UI.AGUI.Core.Padding
+                     , Graphics.UI.AGUI.Core.Placement
+                     , Graphics.UI.AGUI.Core.Renderer
+                     , Graphics.UI.AGUI.Core.Spacing
+                     , Graphics.UI.AGUI.Elements.Label
+
+  default-extensions:  GeneralizedNewtypeDeriving
+
+  build-depends:       base         >= 4.8 && < 4.9
+                     , event        >= 0.1 && < 0.2
+                     , transformers >= 0.4 && < 0.5
+
+  hs-source-dirs:      src
+
+  default-language:    Haskell2010
