@@ -53,10 +53,21 @@ data El a = El {
   , elEvent     :: Event a
     -- |Element 'Trigger'.
   , elTrigger   :: Trigger a
+    -- |Element children.
+  , elChildren  :: [AnyEl]
   }
 
+data AnyEl = forall a. AnyEl (El a)
+
 -- |Convenient type to build specialized 'El'.
-type BuildEl m a = Margin -> Padding -> Placement -> Layout -> Renderer a -> m (El a)
+type BuildEl m a =
+     Margin
+  -> Padding
+  -> Placement
+  -> Layout
+  -> Renderer a
+  -> [AnyEl]
+  -> m (El a)
 
 -- |Create a new 'El'.
 newEl :: (MonadIO m)
@@ -66,10 +77,11 @@ newEl :: (MonadIO m)
       -> Placement
       -> Layout
       -> Renderer a
+      -> [AnyEl]
       -> m (El a)
-newEl a mar pad pla lay rend = do
+newEl a mar pad pla lay rend children = do
   (e,t) <- newEvent
-  pure $ El a mar pad pla lay rend e t
+  pure $ El a mar pad pla lay rend e t children
 
 -- |Change the content of an 'El'.
 (<%>) :: (MonadIO m) => (a -> a) -> El a -> m (El a)

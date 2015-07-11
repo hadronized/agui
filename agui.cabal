@@ -24,7 +24,8 @@ library
                      , Graphics.UI.AGUI.Core.Spacing
                      , Graphics.UI.AGUI.Elements.Label
 
-  default-extensions:  GeneralizedNewtypeDeriving
+  default-extensions:  ExistentialQuantification
+                     , GeneralizedNewtypeDeriving
 
   build-depends:       base         >= 4.8 && < 4.9
                      , event        >= 0.1 && < 0.2
