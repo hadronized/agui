@@ -22,6 +22,7 @@ library
                      , Graphics.UI.AGUI.Core.Placement
                      , Graphics.UI.AGUI.Core.Renderer
                      , Graphics.UI.AGUI.Core.Spacing
+                     , Graphics.UI.AGUI.Core.Widget
                      , Graphics.UI.AGUI.Elements.Label
 
   default-extensions:  ExistentialQuantification
