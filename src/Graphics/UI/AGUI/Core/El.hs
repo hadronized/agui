@@ -32,10 +32,8 @@ data El a = El {
   , elLayout    :: Layout
     -- Element 'Event'.
   , elEvent     :: Event (El a)
-    -- |Render the element.
-  , elRender    :: (El a -> IO ()) -> IO ()
   }
 
 instance Functor El where
-  fmap f (El a mar pad pla lay e rend) =
-    El (f a) mar pad pla lay (fmap (fmap f) e) $ \rb -> rend $ rb . fmap f
+  fmap f (El a mar pad pla lay e) =
+    El (f a) mar pad pla lay (fmap (fmap f) e)

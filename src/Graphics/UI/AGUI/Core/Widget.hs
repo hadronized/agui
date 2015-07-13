@@ -45,11 +45,10 @@ newWidget :: (MonadIO m)
           -> Padding
           -> Placement
           -> Layout
-          -> ((El a -> IO ()) -> IO ())
           -> m (Widget a,Trigger (El a))
-newWidget a mar pad pla lay rend = do
+newWidget a mar pad pla lay = do
   (e,t) <- newEvent
-  ref <- liftIO . newIORef $ El a mar pad pla lay e rend
+  ref <- liftIO . newIORef $ El a mar pad pla lay e
   pure (Widget (readIORef ref),Trigger (writeIORef ref) <> t)
 
 -- |Register an 'IO' action to be run each time the 'Widget' emits an event.
