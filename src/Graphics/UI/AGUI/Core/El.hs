@@ -12,14 +12,11 @@ module Graphics.UI.AGUI.Core.El (
     El(..)
   ) where
 
-import Control.Concurrent.Event ( Event, Trigger, newEvent, trigger )
-import Control.Monad ( void )
-import Control.Monad.IO.Class ( MonadIO(..) )
+import Control.Concurrent.Event ( Event )
 import Graphics.UI.AGUI.Core.Layout ( Layout )
 import Graphics.UI.AGUI.Core.Margin ( Margin )
 import Graphics.UI.AGUI.Core.Padding ( Padding )
 import Graphics.UI.AGUI.Core.Placement ( Placement )
-import Graphics.UI.AGUI.Core.Renderer ( Renderer )
 
 -- |The core 'El' type.
 data El a = El {
@@ -33,10 +30,12 @@ data El a = El {
   , elPlacement :: Placement
     -- |Element 'Layout'.
   , elLayout    :: Layout
+    -- Element 'Event'.
+  , elEvent     :: Event a
     -- |Render the element.
   , elRender    :: (a -> IO ()) -> IO ()
   }
 
 instance Functor El where
-  fmap f (El a mar pad pla lay rend) =
-    El (f a) mar pad pla lay $ \rb -> rend $ rb . f
+  fmap f (El a mar pad pla lay e rend) =
+    El (f a) mar pad pla lay (fmap f e) $ \rb -> rend $ rb . f
