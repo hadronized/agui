@@ -41,7 +41,7 @@ newWidget :: (MonadIO m)
           -> Padding
           -> Placement
           -> Layout
-          -> ((a -> IO ()) -> IO ())
+          -> ((El a -> IO ()) -> IO ())
           -> m (Widget a,Trigger (El a))
 newWidget a mar pad pla lay rend = do
   (e,t) <- newEvent
