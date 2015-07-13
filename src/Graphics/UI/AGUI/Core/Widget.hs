@@ -48,6 +48,6 @@ newWidget a mar pad pla lay rend = do
   ref <- liftIO . newIORef $ El a mar pad pla lay e rend
   pure (Widget (readIORef ref),Trigger (writeIORef ref) <> t)
 
--- |Register an 'IO' action to be run each type the 'Widget' emits an event.
+-- |Register an 'IO' action to be run each time the 'Widget' emits an event.
 onW :: (MonadIO m) => Widget a -> (El a -> IO ()) -> m Detach
 onW (Widget w) f = liftIO w >>= \el -> on (elEvent el) f
