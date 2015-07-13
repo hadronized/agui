@@ -9,12 +9,7 @@
 -----------------------------------------------------------------------------
 
 module Graphics.UI.AGUI.Core.El (
-    -- * Element
     El(..)
-  , BuildEl
-  , newEl
-  , (<%>)
-  , touch
   ) where
 
 import Control.Concurrent.Event ( Event, Trigger, newEvent, trigger )
@@ -47,52 +42,10 @@ data El a = El {
   , elPlacement :: Placement
     -- |Element 'Layout'.
   , elLayout    :: Layout
-    -- |Element 'Renderer'.
-  , elRenderer  :: Renderer a
-    -- |Element 'Event'.
-  , elEvent     :: Event a
-    -- |Element 'Trigger'.
-  , elTrigger   :: Trigger a
-    -- |Element children.
-  , elChildren  :: [AnyEl]
+    -- |Render the element.
+  , elRender    :: (a -> IO ()) -> IO ()
   }
 
-data AnyEl = forall a. AnyEl (El a)
-
--- |Convenient type to build specialized 'El'.
-type BuildEl m a =
-     Margin
-  -> Padding
-  -> Placement
-  -> Layout
-  -> Renderer a
-  -> [AnyEl]
-  -> m (El a)
-
--- |Create a new 'El'.
-newEl :: (MonadIO m)
-      => a
-      -> Margin
-      -> Padding
-      -> Placement
-      -> Layout
-      -> Renderer a
-      -> [AnyEl]
-      -> m (El a)
-newEl a mar pad pla lay rend children = do
-  (e,t) <- newEvent
-  pure $ El a mar pad pla lay rend e t children
-
--- |Change the content of an 'El'.
-(<%>) :: (MonadIO m) => (a -> a) -> El a -> m (El a)
-(<%>) f el = do
-    trigger (elTrigger el) a'
-    pure $ el { elValue = a' }
-  where
-    a' = f $ elValue el
-
--- |Sometimes, it might be useful to act like one has changed an 'El' whilst one
--- has not. That can be used to broadcast events after the creation of an
--- element.
-touch :: (MonadIO m) => El a -> m ()
-touch = void . (id <%>)
+instance Functor El where
+  fmap f (El a mar pad pla lay rend) =
+    El (f a) mar pad pla lay $ \rb -> rend $ rb . f
