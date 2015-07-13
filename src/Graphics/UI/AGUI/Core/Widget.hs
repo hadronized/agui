@@ -21,6 +21,13 @@ import Graphics.UI.AGUI.Core.Margin ( Margin )
 import Graphics.UI.AGUI.Core.Padding ( Padding )
 import Graphics.UI.AGUI.Core.Placement ( Placement )
 
+-- |A 'Widget' is a /reactive/ object holding information.
+--
+-- A 'Widget' is a 'Functor', meaning that you can change its type as long as
+-- you can still use it later on. For instance, changing the type of a 'Widget'
+-- might prevent you from rendering it.
+--
+-- If you change the type of a 'Widget', you cannot
 newtype Widget a = Widget { unWidget :: IO (El a) } deriving (Functor)
 
 newWidget :: (MonadIO m)
@@ -30,8 +37,9 @@ newWidget :: (MonadIO m)
           -> Placement
           -> Layout
           -> ((a -> IO ()) -> IO ())
-          -> m (Widget a,Event (El a),Trigger (El a))
+          -> m (Widget a,Trigger (El a))
 newWidget a mar pad pla lay rend = do
-  ref <- liftIO . newIORef $ El a mar pad pla lay rend
   (e,t) <- newEvent
-  pure (Widget (readIORef ref),e,Trigger (writeIORef ref) <> t)
+  ref <- liftIO . newIORef $ El a mar pad pla lay e rend
+  pure (Widget (readIORef ref),Trigger (writeIORef ref) <> t)
+
