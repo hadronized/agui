@@ -21,16 +21,7 @@ import Graphics.UI.AGUI.Core.Padding ( Padding )
 import Graphics.UI.AGUI.Core.Placement ( Placement )
 import Graphics.UI.AGUI.Core.Renderer ( Renderer )
 
--- |'El' is the element tree. It gathers several important types objects:
---
---   - a 'Margin' ;
---   - a 'Padding' ;
---   - a 'Placement' ;
---   - a 'Layout' ;
---   - the held 'a' value ;
---   - a @'Renderer' a@ ;
---   - an @'Event' a@ ;
---   - a @'Trigger a@'.
+-- |The core 'El' type.
 data El a = El {
     -- |Element held value.
     elValue     :: a
