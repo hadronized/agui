@@ -12,7 +12,7 @@ module Graphics.UI.AGUI.Core.Widget (
     -- *
   )
 
-import Control.Concurrent.Event ( Event, Trigger, newEvent, trigger )
+import Control.Concurrent.Event ( Event, Trigger, newEvent, on, trigger )
 import Control.Monad.IO.Class ( MonadIO(..) )
 import Data.IORef ( newIORef, readIORef, writeIORef )
 import Graphics.UI.AGUI.Core.El ( El(..) )
@@ -48,3 +48,5 @@ newWidget a mar pad pla lay rend = do
   ref <- liftIO . newIORef $ El a mar pad pla lay e rend
   pure (Widget (readIORef ref),Trigger (writeIORef ref) <> t)
 
+onW :: (MonadIO m) => Widget a -> (El a -> IO ()) -> m Detach
+onW (Widget w) f = liftIO w >>= \el -> on (elEvent el) f
