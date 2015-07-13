@@ -9,12 +9,16 @@
 -----------------------------------------------------------------------------
 
 module Graphics.UI.AGUI.Core.Widget (
-    -- *
-  )
+    -- * Widgets
+    Widget
+  , newWidget
+  , onW
+  ) where
 
-import Control.Concurrent.Event ( Event, Trigger, newEvent, on, trigger )
+import Control.Concurrent.Event
 import Control.Monad.IO.Class ( MonadIO(..) )
 import Data.IORef ( newIORef, readIORef, writeIORef )
+import Data.Semigroup ( (<>) )
 import Graphics.UI.AGUI.Core.El ( El(..) )
 import Graphics.UI.AGUI.Core.Layout ( Layout )
 import Graphics.UI.AGUI.Core.Margin ( Margin )

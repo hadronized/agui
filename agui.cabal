@@ -23,14 +23,15 @@ library
                      , Graphics.UI.AGUI.Core.Renderer
                      , Graphics.UI.AGUI.Core.Spacing
                      , Graphics.UI.AGUI.Core.Widget
-                     , Graphics.UI.AGUI.Elements.Label
 
-  default-extensions:  ExistentialQuantification
+  default-extensions:  DeriveFunctor
+                     , ExistentialQuantification
                      , GeneralizedNewtypeDeriving
 
-  build-depends:       base         >= 4.8 && < 4.9
-                     , event        >= 0.1 && < 0.2
-                     , transformers >= 0.4 && < 0.5
+  build-depends:       base         >= 4.8  && < 4.9
+                     , event        >= 0.1  && < 0.2
+                     , transformers >= 0.4  && < 0.5
+                     , semigroups   >= 0.16 && < 0.17
 
   hs-source-dirs:      src
 
