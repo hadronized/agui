@@ -13,7 +13,6 @@ module Graphics.UI.AGUI.Core.El (
   ) where
 
 import Control.Concurrent.Event ( Event )
-import Graphics.UI.AGUI.Core.Layout ( Layout )
 import Graphics.UI.AGUI.Core.Margin ( Margin )
 import Graphics.UI.AGUI.Core.Padding ( Padding )
 import Graphics.UI.AGUI.Core.Placement ( Placement )
@@ -28,12 +27,10 @@ data El a = El {
   , elPadding   :: Padding
     -- |Element 'Placement'.
   , elPlacement :: Placement
-    -- |Element 'Layout'.
-  , elLayout    :: Layout
     -- Element 'Event'.
   , elEvent     :: Event (El a)
   }
 
 instance Functor El where
-  fmap f (El a mar pad pla lay e) =
-    El (f a) mar pad pla lay (fmap (fmap f) e)
+  fmap f (El a mar pad pla e) =
+    El (f a) mar pad pla (fmap (fmap f) e)
