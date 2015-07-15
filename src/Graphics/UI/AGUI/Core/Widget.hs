@@ -20,7 +20,6 @@ import Control.Monad.IO.Class ( MonadIO(..) )
 import Data.IORef ( newIORef, readIORef, writeIORef )
 import Data.Semigroup ( (<>) )
 import Graphics.UI.AGUI.Core.El ( El(..) )
-import Graphics.UI.AGUI.Core.Layout ( Layout )
 import Graphics.UI.AGUI.Core.Margin ( Margin )
 import Graphics.UI.AGUI.Core.Padding ( Padding )
 import Graphics.UI.AGUI.Core.Placement ( Placement )
@@ -44,11 +43,10 @@ newWidget :: (MonadIO m)
           -> Margin
           -> Padding
           -> Placement
-          -> Layout
           -> m (Widget a,Trigger (El a))
-newWidget a mar pad pla lay = do
+newWidget a mar pad pla = do
   (e,t) <- newEvent
-  ref <- liftIO . newIORef $ El a mar pad pla lay e
+  ref <- liftIO . newIORef $ El a mar pad pla e
   pure (Widget (readIORef ref),Trigger (writeIORef ref) <> t)
 
 -- |Register an 'IO' action to be run each time the 'Widget' emits an event.
