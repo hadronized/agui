@@ -19,6 +19,7 @@ library
                      , Graphics.UI.AGUI.Core.Margin
                      , Graphics.UI.AGUI.Core.Metrics
                      , Graphics.UI.AGUI.Core.Padding
+                     , Graphics.UI.AGUI.Core.Parent
                      , Graphics.UI.AGUI.Core.Placement
                      , Graphics.UI.AGUI.Core.Renderer
                      , Graphics.UI.AGUI.Core.Spacing
